@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <title>Add Car Information</title>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Add Parking Information</h2>
+        <form onsubmit="return addData()">
+            <div class="form-group">
+                <label for="name">차 번호:</label>
+                <input type="text" class="form-control" id="name">
+            </div>
+
+            <div class="form-group">
+                <label for="date">출입 날짜 (입력 예시: 10/09):</label>
+                <input type="text" class="form-control" id="date">
+            </div>
+
+            <div class="form-group">
+                <label for="hour">출입 시간 (입력 예시: 09):</label>
+                <input type="text" class="form-control" id="hour">
+            </div>
+
+            <div class="form-group">
+                <label for="min">출입 분 (입력 예시: 06):</label>
+                <input type="text" class="form-control" id="min">
+            </div>
+
+            <label for="membership">정기권 가입 여부:</label>
+            <select class="form-control" id="membership" name="membership">
+                <option value="O">O</option>
+                <option value="X">X</option>
+            </select>
+
+            <br>
+
+            <button class="btn btn-success" type="submit">Add</button>
+        </form>
+    </div>
+
+    <script>
+        
+        function addData() {
+            // Retrieve input values
+            var carNumber = document.getElementById('name').value;
+            var date = document.getElementById('date').value;
+            var hour = document.getElementById('hour').value;
+            var minute = document.getElementById('min').value;
+            var membership = document.getElementById('membership').value;
+
+            var newData = {
+                carNumber: carNumber,
+                date: date,
+                hour: hour,
+                minute: minute,
+                membership: membership
+            };
+
+            var carData = JSON.parse(localStorage.getItem('carData')) || [];
+            carData.push(newData);
+            localStorage.setItem('carData', JSON.stringify(carData));
+            window.location.href = 'index.html';
+
+            return false;
+        }
+    </script>
+    
+</body>
+</html>

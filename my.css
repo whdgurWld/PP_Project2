@@ -1,0 +1,10 @@
+h2{
+    margin-top: 10px;
+}
+
+#myheader{
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    margin: 10px;
+}

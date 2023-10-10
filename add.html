@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./my.css">
     <title>Add Car Information</title>
 </head>
 <body>
 
-    <div style="display: flex; justify-content: space-between; align-items: center; margin: 10px;"> <!--Row-1 (List Add 등등 있는 곳)--> 
-        <h2 style="margin-top: 10px;">Car List</h2>
+    <div id="myheader">
+        <h2>Car List</h2>
     </div>
     
     <hr class="border-bottom">
@@ -118,6 +119,7 @@
 
             var carData = JSON.parse(localStorage.getItem('carData')) || [];
 
+            alert('새로운 주차 데이터가 추가됩니다.');
             carData.push(newData);
             localStorage.setItem('carData', JSON.stringify(carData));
             window.location.href = 'index.html';

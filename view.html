@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Page</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+
+<body>
+
+    <div style="display: flex; justify-content: space-between; align-items: center; margin: 10px;"> <!--Row-1 (List Add 등등 있는 곳)--> 
+        <h2 style="margin: 0;">Car List</h2>
+    </div>
+    
+    <hr class="border-bottom">
+    
+        
+    <div class="container" style="padding-top: 20px;">
+        <div class="table-responsive">
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>차 번호</th>
+                        <th>출입 날짜</th>
+                        <th>출입 시간</th>
+                        <th>출입 분</th>
+                        <th>정기권 가입 여부</th>
+                    </tr>
+                </thead>
+
+                <tbody id="carList">
+                </tbody>
+
+            </table>
+
+
+            
+
+
+
+            <button class="btn btn-success" onclick="backToMain()">Back to Main</button>
+        </div>
+    </div>
+
+
+      
+    
+    <script>
+        function backToMain() {
+            window.location.href = 'index.html';
+        }
+
+        function editData(index) {
+            window.location.href = 'edit.html?index=' + index;
+        }
+
+        function deleteData(index) {
+            //confirm 으로 확인 또는 취소로 받기.
+            if(!confirm('데이터를 정말 삭제하실건가요?')) return;
+            //전체 데이터 받아오기
+            var carData = JSON.parse(localStorage.getItem('carData')) || [];
+ 
+
+
+            //index 부터 1개 삭제.
+            carData.splice(index, 1);
+
+            //변경된 데이터를 현재 데이터로 할당
+            localStorage.setItem('carData', JSON.stringify(carData));
+            backToMain();
+        }
+
+        function getQueryParam(name) {
+            var urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        var editIndex = getQueryParam('index');
+
+
+        function displayData() {
+            var carData = JSON.parse(localStorage.getItem('carData')) || [];
+            var tableBody = document.getElementById('carList');
+            tableBody.innerHTML = '';
+
+                var rowData = carData[editIndex];
+                var newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td>${rowData.carNumber}</td>
+                    <td>${rowData.date}</td>
+                    <td>${rowData.hour}시</td>
+                    <td>${rowData.minute}분</td>
+                    <td>${rowData.membership}</td>
+                    <button style="margin-right: 5px;" class="btn btn-success" onclick="editData(${editIndex})">Edit</button>
+                    <button class="btn btn-success" onclick="deleteData(${editIndex})">Delete</button>
+                `;
+                tableBody.appendChild(newRow);
+        }   
+
+        displayData();
+        
+    </script>
+    
+</body>
+</html>

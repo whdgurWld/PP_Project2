@@ -6,23 +6,24 @@
     <title>Main Page</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 </head>
+
 <body>
-    <div> <!--Column-1--> 
+    <div>
         <div style="display: flex; justify-content: space-between; align-items: center; margin: 10px;"> <!--Row-1 (List Add 등등 있는 곳)--> 
             <h2 style="margin: 0;">Car List</h2>
             
             <div action="./" style="display: flex; align-items: center;">
-              <form action="./" style="display: flex; align-items: center;">
+              <!-- <form action="./" style="display: flex; align-items: center;">
               <select class="form-control" id="membership" name="membership" style="margin-right: 10px;">
                   <option value="N">전체</option>
                   <option value="O">정기권 가입자</option>
                   <option value="X">정기권 미가입자</option>
               </select>
               <input class="form-control" type="text" id="name" name="name" style="margin-right: 10px;" placeholder="Car No.">
-              </form>
+              </form> -->
 
-              <form action="./"><button class="btn btn-default" style="margin-right: 10px;" onclick="resetData()">Search</button></form>
-              <form action="/add1.html"><button class="btn btn-success">Add</button></form>
+              <form action="./"><button class="btn btn-default" style="margin-right: 10px;" onclick="resetData()">Reset Data</button></form>
+              <form action="/add.html"><button class="btn btn-success">Add</button></form>
 
             </div>
         </div>
@@ -46,8 +47,11 @@
                   </tbody>
   
               </table>
+
+              <p>To edit or delete data, Click the data's Car Number in the list</p>
           </div>
       </div>
+
     
       <script>
 
@@ -89,6 +93,10 @@
             location.reload();
         }
 
+        function viewData(index) {
+            window.location.href = 'view.html?index=' + index;
+        }
+
         function displayData() {
             var carData = JSON.parse(localStorage.getItem('carData')) || [];
             var tableBody = document.getElementById('carList');
@@ -98,7 +106,8 @@
                 var rowData = carData[i];
                 var newRow = document.createElement('tr');
                 newRow.innerHTML = `
-                    <td>${rowData.carNumber}</td>
+                    
+                    <td><button onclick='viewData(${i})'>${rowData.carNumber}</button></td>
                     <td>${rowData.date}</td>
                     <td>${rowData.hour}시</td>
                     <td>${rowData.minute}분</td>

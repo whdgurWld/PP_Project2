@@ -7,7 +7,6 @@
     <title>Add Car Information</title>
 </head>
 <body>
-
     <div style="display: flex; justify-content: space-between; align-items: center; margin: 10px;"> <!--Row-1 (List Add 등등 있는 곳)--> 
         <h2 style="margin: 0;">Car List</h2>
     </div>
@@ -39,7 +38,6 @@
 
             <label for="membership">정기권 가입 여부:</label>
             <select class="form-control" id="membership" name="membership">
-                <option value="N">선택</option>
                 <option value="O">O</option>
                 <option value="X">X</option>
             </select>
@@ -47,16 +45,35 @@
             <br>
 
             <button class="btn btn-success" type="submit">Add</button>
-            
         </form>
         <button class="btn btn-default" onclick="moveToMain()" style="margin-top: 10px;">Cancel</button>
+
     </div>
 
     <script>
-
         function moveToMain() {
             window.location.href = 'index.html';
         }
+
+        function getQueryParam(name) {
+            var urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        var editIndex = getQueryParam('index');
+
+        function loadCarDataForEdit() {
+            var carData = JSON.parse(localStorage.getItem('carData')) || [];
+            var selectedCar = carData[editIndex];
+
+            document.getElementById('name').value = selectedCar.carNumber; 
+            document.getElementById('date').value = selectedCar.date; 
+            document.getElementById('hour').value = selectedCar.hour; 
+            document.getElementById('min').value = selectedCar.minute; 
+            document.getElementById('membership').value = selectedCar.membership; 
+        }
+        
+        loadCarDataForEdit();
 
         function validateForm() {
             var carNumber = document.getElementById('name').value;
@@ -118,7 +135,10 @@
 
             var carData = JSON.parse(localStorage.getItem('carData')) || [];
 
+            
+            carData.splice(editIndex, 1);
             carData.push(newData);
+            
             localStorage.setItem('carData', JSON.stringify(carData));
             window.location.href = 'index.html';
 
